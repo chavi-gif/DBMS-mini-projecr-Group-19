@@ -1,59 +1,52 @@
-CREATE TABLE Attendance
+
+//create admin table
+
+CREATE  TABLE Admin
 (
-	Stu_id CHAR(12),
-	Course_code CHAR(7),
-	Type CHAR(4),
-	Status CHAR(8),
-	Date DATE,
-	PRIMARY KEY(Stu_id,course_code,Type,Date),
-	FOREIGN KEY (Course_Code) REFERENCES Course(course_code),
-FOREIGN KEY (stu_id) REFERENCES Student(Stu_id)
-);
-
-// dean E-mail
-CREATE TABLE Dean_E_MAIL
-(	
-	Dean_id CHAR(7),
-	Dean_E_mail VARCHAR(50),
-	FOREIGN KEY (Dean_id) REFERENCES Dean(Dean_id)
-);
-
-
-// Dean
-CREATE TABLE Dean
-(
-	Dean_id CHAR(7),
-	First_name VARCHAR(20) NOT NULL,
-	Last_name VARCHAR(20) NOT NULL,
-	Dean_mobile VARCHAR(11),
+	Admin_id CHAR(7),
+	First_Name VARCHAR(20) NOT NULL,
+	Last_name VARCHAR (20) NOT NULL,
+	Admin_mobile VARCHAR(11),
 	Appoint_Date DATE,
-	PRIMARY KEY(Dean_id)
-)
-//lec-update-mark
-CREATE TABLE Lec_Update_mark
+	PRIMARY KEY(Admin_id)
+);
+// create admin email (Multivalue)
+
+CREATE TABLE Admin_e_mail
 (
-	Lec_id CHAR(7),
-	Stu_id CHAR(12),
-	Course_code CHAR(7),
-	PRIMARY KEY(Lec_id,stu_id,course_code),
-	FOREIGN KEY (Lec_id) REFERENCES lecturer(Lec_id),
-	FOREIGN KEY(Course_Code) REFERENCES Course(course_code),
-	FOREIGN KEY(stu_id) REFERENCES Student(Stu_id)
+	Admin_id CHAR(7),
+	Admin_E_mail VARCHAR(50),
+	FOREIGN KEY (Admin_id) REFERENCES Admin(Admin_id)
 );
 
-//medical
-CREATE TABLE Medical
+// create Technical_officer table 
+
+CREATE TABLE Technical_officer
+(
+	Tech_id CHAR(7),
+	Department VARCHAR(8),
+	First_Name VARCHAR(20),
+	Last_name VARCHAR(20),
+	TO_mobile VARCHAR(11),
+	PRIMARY KEY(Tech_id)
+);
+
+// create technical officer e mail(Multivalue)
+
+CREATE TABLE Tec_E_mail
+(
+	Tech_id CHAR(7),
+	TO_E_mail VARCHAR(50),
+	FOREIGN KEY (Tech_id) REFERENCES Technical_officer(Tech_id)
+);
+
+
+//create TO_UPDATE_MEDICAL(Relationship)
+
+CREATE TABLE TO_UPDATE_MEDICAL
 (
 	Medical_id CHAR(7),
-	Stu_id CHAR(12),
-	Course_code CHAR(7),
-	Exam_or_Lecture VARCHAR(15),
-	Medical_description VARCHAR(20),
-	Start_date DATE,
-	End_Date DATE,
-	PRIMARY KEY(Medical_id,course_code),
-	FOREIGN KEY (Course_Code) REFERENCES Course(course_code),
-	FOREIGN KEY (stu_id) REFERENCES Student(Stu_id)
+	Tech_id CHAR(7),
+	PRIMARY KEY(Medical_id,Tech_id)
 );
-
 
