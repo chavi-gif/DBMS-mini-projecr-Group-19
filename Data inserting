@@ -1,0 +1,84 @@
+INSERT INTO COURSE
+(course_code,course_name,credits,Theory,Practical,Department,Dean_id,Admin_id)
+VALUES
+('ICT1212','Database Management System',2,'Theory','No','Dep_ICT','D002','AD001' ),
+('ICT1222','Database Management System Practicum',2,'No','Practical','Dep_ICT','D002','AD001'),
+('ENG1222','English',2,'Theory','No','Dep_MDS','D002','AD001'),
+('ICT1233','Server-side web devolopment',3,'Theory','Practical','Dep_ICT','D002','AD001'),
+('ICT1242','Computer Architecture',2,'Theory','No','Dep_ICT','D002','AD001'),
+('ICT1253','Computer Network',3,'Theory','Practical','Dep_ICT','D002','AD001'),
+('TCS1212','Fundermentals of Management',2,'Theory','No','Dep_MDS','D002','AD001'),
+('TCS1233','Discrete Mathematics',3,'Theory','No','Dep_ENG','D002','AD001');
+
+INSERT INTO TO_UPDATE_COURSE
+	(course_code,tech_id)
+VALUES
+	('ICT1212','TEC001'),	
+	('ICT1222','TEC001'),
+	('ICT1233','TEC001'),
+	('ICT1242','TEC001'),
+	('ICT1253','TEC001'),
+	('ICT1212','TEC003'),	
+	('ICT1222','TEC003'),
+	('ICT1233','TEC003'),
+	('ICT1242','TEC003'),
+	('ICT1253','TEC003'),
+	('TCS1212','TEC004'),
+	('TCS1233','TEC002'),
+	('ENG1222','TEC004');
+
+INSERT INTO Lec_update_course
+	(Course_code,Lec_id)
+VALUES
+	('ICT1212','LEC001'),
+	('ICT1212','LEC002'),
+	
+	('ICT1222','LEC001'),
+	('ICT1222','LEC002'),
+	
+	('ICT1233','LEC005'),
+	
+	('ICT1242','LEC006'),
+	('ICT1242','LEC007'),
+	
+	('ICT1253','LEC008'),
+	
+	('TCS1212','LEC009'),
+	('TCS1212','LEC010'),
+	
+	('TCS1233','LEC011'),
+	
+	('ENG1222','LEC003'),
+	('ENG1222','LEC004');
+
+INSERT INTO Lecturer
+	(Lec_id,first_name,Last_name,department,lecturer_mobile)
+VALUES
+	('LEC001','Nuwan','Laksiri','Dep_ICT','071 1025198'),
+	('LEC002','Malsha','Prabuddi','Dep_ICT','071 9998544'),
+	('LEC003','Naveen','Walimuni','Dep_MDS','076 2123902'),
+	('LEC004','Navoda','Herath','Dep_MDS','075 8854210'),
+	('LEC005','Rumeshika','Arachchi','Dep_ICT','071 2965133'),
+	('LEC006','Shashitha','Lakal','Dep_ICT','076 9874561'),
+	('LEC007','Methmi','Wickramanayaka','Dep_ICT','071 5863459'),
+	('LEC008','Chanduni','Gamage','Dep_ICT','076 2584631'),
+	('LEC009','Chathuranaga','Adhikari','Dep_MDS','076 5684324'),
+	('LEC010','Shazhana','Saleeth','Dep_MDS','071 5862490'),
+	('LEC011','Harshana','Senavirathna','Dep_ENG','076 5824973');
+ 
+
+INSERT INTO lec_e_mail
+	(lec_id,lecturer_e_mail)
+VALUES
+	('LEC001','nuwanlaksiri@gmil.com , nuwan@tec.ruh.ac.lk'),
+	('LEC002','malshaprabuddhi@gmail.com , mprabuddhi@ictec.ruh.ac.lk'),
+	('LEC003','devindanaveen@gmail.com , naveen@tec.ruh.ac.lk '),
+	('LEC004','navodanherath@gmail.com , navoda@tec.ruh.ac.lk'),
+	('LEC005','rumeshika@gmail.com , rumeshika@ictec.ruh.ac.lk'),
+	('LEC006','shashithalakal@gmail.com , shashithal@ictec.ruh.ac.lk'),
+	('LEC007', 'Methmi@gmail.com , methmi@fot.ruh.ac.lk'),
+	('LEC008','chanduni@gmail.com , chanduni@ictec.ruh.ac.lk'),
+	('LEC009','chathuranga@gmail.com , chathuranga@fot.ruh.ac.lk'),
+	('LEC010','Shazhana@gmail.com , shazhana@fot.ruh.ac.lk'),
+	('LEC011','harshana@gmail.com , harshanahela@fot.ruh.ac.lk');
+
