@@ -1,0 +1,47 @@
+CREATE TABLE Course
+(
+	Course_Code CHAR(7),
+	Course_name VARCHAR(50) NOT NULL,
+	Credits INT(2),
+	Theory VARCHAR(10),
+	Practical VARCHAR(10),
+	Department VARCHAR(8),
+	Dean_id CHAR(7),
+	Admin_id CHAR(7),
+	PRIMARY KEY(Course_code),
+	FOREIGN KEY (Admin_id) REFERENCES admin(admin_id),
+	FOREIGN KEY (Dean_id) REFERENCES dean(dean_id)
+);
+
+CREATE TABLE TO_Update_course
+(
+	Course_Code CHAR(7),
+	Tech_id CHAR(7),
+	PRIMARY KEY(course_code,Tech_id),
+	FOREIGN KEY (Course_code) REFERENCES course(course_code),
+	FOREIGN KEY (Tech_id) REFERENCES Technical_officer(Tech_id)
+);
+
+CREATE TABLE Lec_update_course
+(
+	Course_code CHAR(7),
+	Lec_id CHAR(7),
+	PRIMARY KEY(course_code,Lec_id),
+	FOREIGN KEY (Lec_id) REFERENCES lecturer(Lec_id),
+	FOREIGN KEY (course_code) REFERENCES course(course_code)
+);
+CREATE TABLE Lecturer
+(
+	Lec_id CHAR(7),
+	First_Name VARCHAR(20) NOT NULL,
+	Last_name VARCHAR (20) NOT NULL,
+	Department VARCHAR(8),
+	Lecturer_mobile VARCHAR(11),
+	PRIMARY KEY(Lec_id)
+);
+CREATE TABLE Lec_E_Mail
+(
+	Lec_id CHAR(7),
+	Lecturer_E_mail VARCHAR(60),
+	FOREIGN KEY (Lec_id) REFERENCES lecturer(Lec_id)
+);
