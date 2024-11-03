@@ -1,0 +1,37 @@
+Create procedures
+---	show  grade by input course_code
+
+DELIMITER //
+
+CREATE PROCEDURE get_gradeby_course(IN course CHAR(7))
+BEGIN
+    SELECT 
+        *
+    FROM 
+        Grade
+    WHERE 
+        course_code = course; 
+END //
+
+DELIMITER ;
+
+CALL get_gradeby_course('ICT1212');
+
+
+---	see course grade when input stu_id
+
+DELIMITER //
+
+CREATE PROCEDURE get_gradeby_student(IN Student CHAR(12))
+BEGIN
+    SELECT 
+        *
+    FROM 
+        Grade
+    WHERE 
+        Stu_id = Student; 
+END //
+
+DELIMITER ;
+
+CALL get_gradeby_student('TG_2022_1403');
