@@ -1,0 +1,56 @@
+
+----	Check attendance only for theory
+  
+CREATE VIEW theory_attendance_view AS
+SELECT 
+    Stu_id,
+    Course_code,
+    Type,
+    AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 AS Percentage,
+    CASE 
+        WHEN AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 >= 75 THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS  Eligibility
+FROM 
+    Attendance
+WHERE 
+    Type = 'T'  
+GROUP BY 
+    Stu_id, Course_code;
+  
+----	Check attendance only for practical
+
+CREATE VIEW practical_attendance_view AS
+SELECT 
+    Stu_id,
+    Course_code,
+    Type,
+    AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 AS Percentage,
+    CASE 
+        WHEN AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 >= 75 THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS Eligibility
+FROM 
+    Attendance
+WHERE 
+    Type = 'P'  
+GROUP BY 
+    Stu_id, Course_code;
+
+  
+----	Check both attendance
+
+CREATE VIEW combined_attendance_view AS
+SELECT 
+    Stu_id,
+    Course_code,
+    AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 AS Percentage,
+    CASE 
+        WHEN AVG(CASE WHEN Status = 'Present' THEN 1 ELSE 0 END) * 100 >= 75 THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS Eligibility
+FROM 
+    Attendance
+GROUP BY 
+    Stu_id, Course_code;
+
