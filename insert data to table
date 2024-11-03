@@ -1,0 +1,51 @@
+// insert data into admin table
+
+INSERT INTO admin
+	(admin_id,First_name,Last_name,admin_mobile,Appoint_Date)
+VALUES
+	('AD001','Ruwan','Dharshana','076 2678905','2017-02-07');
+
+
+// insert data into admin e-mail
+
+INSERT INTO admin_e_mail
+	(Admin_id,Admin_e_mail)
+VALUES
+	('AD001','ruwandharshana@gmail.com , ruwan@admin.ruh.ac.lk');
+
+
+
+INSERT INTO Technical_officer
+	(tech_id,department,First_name,Last_name,TO_mobile)
+VALUES
+	('TEC001','Dep_ICT','Kasun','Jayasingha','071-5964783'),	
+	('TEC002','Dep_ENG','Malik','Kumara','076-5821467'),
+	('TEC003','Dep_ICT','Nihal','Perera','071-4598627'),
+	('TEC004','Dep_MDS','Anushka','Bandara','076-8264739'),
+	('TEC005','Dep_BST','Ranil','Kumarathunga','071-9267300');
+	
+
+//	insert data into technical officer e-mail table
+
+INSERT INTO Tec_E_mail
+	(tech_id,TO_E_mail)
+VALUES
+	('TEC001','kasun@34gmail.com , Kasun@fot.ruh.ac.lk'),
+	('TEC002','malikkumara@78gmail.com , malik@fot.ruh.ac.lk'),
+	('TEC003','peraranihal@45gmail.com , nihal@fot.ruh.ac.lk '),
+	('TEC004','Anushka@45gmail.com , anushka@fot.ruh.ac.lk'),
+	('TEC005','ranil@78gmail.com, ranil@fot.ruh.ac.lk');
+
+// data insert into TO_UPDATE_MEDICAL
+
+INSERT INTO TO_UPDATE_MEDICAL
+	(Medical_id,Tech_id)
+VALUES
+	('MED001','TEC001'),
+	('MED001','TEC003'),
+	
+	('MED002','TEC001'),
+	('MED002','TEC003'),
+	
+	('MED003','TEC004'),
+	('MED004','TEC004');

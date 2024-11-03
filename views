@@ -1,67 +1,40 @@
-Attendance_count_view..............
-CREATE VIEW Attendance_count_view AS
-SELECT
-    attendance.Stu_id,
-    attendance.Course_code,
-    attendance.Type,
-	
-    COUNT(IF(attendance.Status = 'present', 1, NULL)) AS Present_Count
-FROM
-    attendance
-JOIN
-    student ON attendance.Stu_id = student.Stu_id
-WHERE
-    attendance.Type NOT IN ('E_T', 'E_P','E_TP') 
-GROUP BY
-    attendance.Stu_id,
-    attendance.Course_code,
-    attendance.Type;
 
-grade_point_view..............
-CREATE VIEW grade_point_view AS
-SELECT
-    final_mark_view.stu_id,
-    final_mark_view.course_code,
-    final_mark_view.final_mark,
-    student.Student_State,
-    IF(student.Student_State = 'Repeat', 2.0,
-        IF(final_mark_view.final_mark >= 90, 4.0,
-        IF(final_mark_view.final_mark >= 84, 4.0,
-        IF(final_mark_view.final_mark >= 75, 3.7,
-        IF(final_mark_view.final_mark >= 70, 3.3,
-        IF(final_mark_view.final_mark >= 65, 3.0,
-        IF(final_mark_view.final_mark >= 60, 2.7,
-        IF(final_mark_view.final_mark >= 55, 2.3,
-        IF(final_mark_view.final_mark >= 50, 2.0,
-        IF(final_mark_view.final_mark >= 45, 1.7,
-        IF(final_mark_view.final_mark >= 40, 1.3,
-        IF(final_mark_view.final_mark >= 35, 1.0, 0.0)))))))))))) AS Grade_point
-FROM
-    student,final_mark_view
-WHERE
-    student.stu_id = final_mark_view.stu_id;
-SGPA_view....................
-CREATE VIEW SGPA_view AS
-SELECT 
-    grade_point_view.stu_id,
-    (SUM(grade_point_view.Grade_point * course.Credits) / SUM(course.Credits)) AS SGPA
-FROM 
-    grade_point_view
-JOIN 
-    course ON grade_point_view.course_code = course.course_code
-GROUP BY 
-    grade_point_view.stu_id;
+//end_exam_eligibility
 
-CGPA_view................
-CREATE VIEW CGPA_view AS
+
+CREATE VIEW end_exam_eligibility AS
 SELECT 
-    grade_point_view.stu_id,
-    (SUM(grade_point_view.Grade_point * course.Credits) / SUM(course.Credits)) AS CGPA
-FROM 
-    grade_point_view
-JOIN 
-    course ON grade_point_view.course_code = course.course_code
-WHERE 
-    course.course_code != 'ENG1222'  -- Exclude courses that should not be counted
-GROUP BY 
-    grade_point_view.stu_id;
+    attendance_eligibility.stu_id AS Student,
+    attendance_eligibility.course_code AS Course,
+    CASE
+        WHEN attendance_eligibility.Eligibility = 'Eligible' AND CA_marks_eligible.CA_eligibility = 'eligible' THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS End_Exam_Eligibility
+FROM attendance_eligibility,CA_marks_eligible 
+WHERE attendance_eligibility.stu_id = CA_marks_eligible.stu_id AND attendance_eligibility.course_code = CA_marks_eligible.course_code AND attendance_eligibility.Type != 'E_T' AND attendance_eligibility.Type != 'E_TP' AND attendance_eligibility.Type != 'E_P';
+
+
+
+///getting final results(ca+end)....
+
+
+ CREATE VIEW combined_results AS
+ SELECT
+     e.Student,
+     e.Course,
+
+     CASE
+		WHEN e.Course = 'ENG1222' THEN fr.English_Final_Mark
+		WHEN e.Course = 'ICT1212' THEN fr.DBMS_theory_Final_Mark
+		WHEN e.Course = 'ICT1222' THEN fr.DBMS_practical_Final_Mark
+		WHEN e.Course = 'ICT1233' THEN fr.Server_side_Final_Mark
+		WHEN e.Course = 'ICT1242' THEN fr.Computer_architecture_Final_Mark
+		WHEN e.Course = 'ICT1253' THEN fr.Computer_Network_Final_Mark
+		WHEN e.Course = 'TCS1212' THEN fr.Management_Final_Mark
+		WHEN e.Course = 'TCS1233' THEN fr.D_maths_Final_Mark
+     ELSE 0
+		END AS Final_Mark
+    FROM
+		Eligible e
+    JOIN
+      final_results fr ON  e.Course = fr.Course_code;
