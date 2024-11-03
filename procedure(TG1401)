@@ -1,0 +1,27 @@
+get attendance by course code
+
+DELIMITER //
+CREATE PROCEDURE get_attendance_by_course_code(IN Course_code CHAR(7))
+BEGIN
+	SELECT attendance_eligibility.stu_id,attendance.date,attendance_eligibility.attendance_Percentage,attendance_eligibility.Eligibility
+	from attendance,attendance_eligibility
+	where attendance_eligibility.stu_id=attendance.stu_id AND attendance_eligibility.Course_code=Course_code AND attendance_eligibility.Type!='E_T' AND attendance_eligibility.Type!='E_TP' AND attendance_eligibility.Type!='E_P'; 
+	END //
+	DELIMITER ;
+	
+	CALL get_attendance_by_course_code('ICT1212');
+
+
+//////get mark by student id
+
+DELIMITER //
+CREATE PROCEDURE get_markby_StudentId(IN Student CHAR(12))
+BEGIN
+	SELECT mark.Course_code,mark.Assesment,mark.Quiz_1,mark.Quiz_2,mark.Quiz_3,mark.Mid_Theory,mark.Mid_Practical,CA_marks_eligible.CA_marks
+	FROM mark,CA_marks_eligible
+	WHERE mark.Stu_id=CA_marks_eligible.Stu_id AND mark.Course_code = CA_marks_eligible.Course_code AND mark.Stu_id=Student;
+END//
+DELIMITER ;
+
+
+CALL get_markby_StudentId('TG_2022_1400');
