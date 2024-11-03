@@ -1,0 +1,54 @@
+
+// create STUDENT table
+
+CREATE TABLE Student
+(
+	Stu_id CHAR(12),
+	Date_of_Birth DATE,
+	First_Name VARCHAR(20),
+	Last_name VARCHAR (20),
+	Gender CHAR(7),
+	Student_State CHAR(10),
+	Student_mobile VARCHAR(11),
+	PRIMARY KEY(Stu_id)
+);
+
+//create student e-mail(multivalue)
+
+CREATE TABLE Student_E_mail
+(
+	Stu_id CHAR(12),
+	Student_E_mail VARCHAR(60),
+	FOREIGN KEY (stu_id) REFERENCES Student(Stu_id)
+);
+
+//create study table(relationship)
+
+CREATE TABLE stu_assign_course
+(
+	Stu_id CHAR(12),
+	Course_code CHAR(7),
+	PRIMARY KEY(Stu_id,Course_code),
+	FOREIGN KEY (Course_Code) REFERENCES Course(course_code),
+	FOREIGN KEY (stu_id) REFERENCES Student(Stu_id)
+);
+
+
+//Create mark table
+
+CREATE TABLE Mark
+(
+	Stu_id CHAR(12),
+	Course_code CHAR(7),
+	Assesment INT DEFAULT 0,
+	Quiz_1 INT DEFAULT 0,
+	Quiz_2 INT DEFAULT 0,
+	Quiz_3 INT DEFAULT 0,
+	Mid_Theory INT DEFAULT 0,
+	Mid_Practical INT DEFAULT 0,
+	End_Theory INT DEFAULT 0,
+	End_practical INT DEFAULT 0,
+	PRIMARY KEY(stu_id,course_code),
+	FOREIGN KEY(Course_Code) REFERENCES Course(course_code),
+	FOREIGN KEY(stu_id) REFERENCES Student(Stu_id)
+);
