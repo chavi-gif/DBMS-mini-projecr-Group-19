@@ -1,4 +1,5 @@
----getattentance by course code---
+
+////getattentance by course code
 
 DELIMITER //
 CREATE PROCEDURE get_attendance_by_course_code(IN Course_code CHAR(7))
@@ -9,12 +10,12 @@ BEGIN
 	END //
 	DELIMITER ;
 	
+	
 	CALL get_attendance_by_course_code('ICT1212');
 
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+////get mark by student id
 
----get mark by student id---
 
 DELIMITER //
 CREATE PROCEDURE get_markby_StudentId(IN Student CHAR(12))
@@ -27,6 +28,5 @@ DELIMITER ;
 
 
 CALL get_markby_StudentId('TG_2022_1400');
-
 
 
