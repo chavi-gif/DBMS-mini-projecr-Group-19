@@ -1,0 +1,53 @@
+CREATE VIEW Grade AS
+SELECT 
+    Stu_id,
+    Course_code,
+    final_mark,
+    CASE
+        WHEN Stu_id BETWEEN 'TG_2022_1400' AND 'TG_2022_1409' THEN
+            CASE
+                WHEN final_mark <= 100 AND final_mark >= 85 THEN 'A+'
+                WHEN final_mark < 85 AND final_mark >= 75 THEN 'A'
+                WHEN final_mark < 75 AND final_mark >= 70 THEN 'A-'
+                WHEN final_mark < 70 AND final_mark >= 65 THEN 'B+'
+                WHEN final_mark < 65 AND final_mark >= 60 THEN 'B'
+                WHEN final_mark < 60 AND final_mark >= 55 THEN 'B-'
+                WHEN final_mark < 55 AND final_mark >= 50 THEN 'C+'
+                WHEN final_mark < 50 AND final_mark >= 45 THEN 'C'
+                WHEN final_mark < 45 AND final_mark >= 40 THEN 'C-'
+                WHEN final_mark < 40 AND final_mark >= 35 THEN 'D+'
+                WHEN final_mark < 35 AND final_mark >= 30 THEN 'D'
+                ELSE 'E'
+            END
+        ELSE
+            CASE
+                
+WHEN final_mark <= 100 AND final_mark >= 85 THEN 'C'
+                WHEN final_mark < 85 AND final_mark >= 75 THEN 'C'
+                WHEN final_mark < 75 AND final_mark >= 70 THEN 'C'
+                WHEN final_mark < 70 AND final_mark >= 65 THEN 'C'
+                WHEN final_mark < 65 AND final_mark >= 60 THEN 'C'
+                WHEN final_mark < 60 AND final_mark >= 55 THEN 'C'
+                WHEN final_mark < 55 AND final_mark >= 50 THEN 'C'
+                WHEN final_mark < 50 AND final_mark >= 45 THEN 'C'
+                WHEN final_mark < 45 AND final_mark >= 40 THEN 'C-'
+                WHEN final_mark < 40 AND final_mark >= 35 THEN 'D+'
+                WHEN final_mark < 35 AND final_mark >= 30 THEN 'D'
+                ELSE 'E'
+            END
+    END AS Grade
+FROM 
+    Final_mark_view
+ORDER BY 
+    Stu_id ASC;
+
+
+
+
+CREATE OR REPLACE VIEW attendance_eligibility AS
+  SELECT stu_id,course_code, Type,
+  (COUNT(status) / 14.0) * 100 AS Attendance_Percentage,
+    IF((COUNT(status) / 14.0) * 100 >= 80, "Eligible", "Not Eligible") AS Eligibility
+   FROM attendance
+    WHERE status = "Present"
+ GROUP BY  stu_id, course_code, Type;
