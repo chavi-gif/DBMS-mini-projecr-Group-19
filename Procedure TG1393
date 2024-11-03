@@ -1,0 +1,24 @@
+DELIMITER //
+CREATE PROCEDURE get_markby_Course_code(IN Course CHAR(7))
+BEGIN
+	SELECT mark.Stu_id,mark.Assesment,mark.Quiz_1,mark.Quiz_2,mark.Quiz_3,mark.Mid_Theory,mark.Mid_Practical,CA_marks_eligible.CA_marks
+	FROM mark,CA_marks_eligible
+	WHERE mark.Stu_id=CA_marks_eligible.Stu_id  AND mark.Course_code = CA_marks_eligible.Course_code AND mark.Course_code=Course;
+END//
+DELIMITER ;
+
+CALL get_markby_Course_code('ENG1222');
+
+
+DELIMITER //
+	CREATE PROCEDURE get_markby_coursecode_stu_id(IN Course CHAR(7), IN student CHAR(12))
+	BEGIN
+	SELECT mark.Assesment,mark.Quiz_1,mark.Quiz_2,mark.Quiz_3,mark.Mid_Theory,mark.Mid_Practical,CA_marks_eligible.CA_marks
+	FROM mark,CA_marks_eligible
+	WHERE mark.Stu_id=CA_marks_eligible.Stu_id  AND mark.Course_code = CA_marks_eligible.Course_code AND mark.Course_code=Course AND mark.Stu_id=student;
+END//
+
+DELIMITER ;
+
+CALL get_markby_coursecode_stu_id('ENG1222','TG_2022_1405');
+
