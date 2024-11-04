@@ -50,3 +50,5 @@ CREATE TABLE TO_UPDATE_MEDICAL
 	PRIMARY KEY(Medical_id,Tech_id)
 );
 
+
+
