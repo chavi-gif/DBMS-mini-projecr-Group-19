@@ -62,6 +62,6 @@ FROM
 JOIN 
     course ON grade_point_view.course_code = course.course_code
 WHERE 
-    course.course_code != 'ENG1222'  -- Exclude courses that should not be counted
+    course.course_code != 'ENG1222'  
 GROUP BY 
     grade_point_view.stu_id;
