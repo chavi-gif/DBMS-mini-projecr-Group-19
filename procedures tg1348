@@ -1,0 +1,24 @@
+get_attendanceby_StudentId...
+DELIMITER //
+CREATE PROCEDURE get_attendanceby_StudentId(IN Student_ID CHAR(12))
+BEGIN
+	SELECT Course_code,Attendance_Percentage,Eligibility
+	FROM attendance_eligibility
+	WHERE stu_id=Student_ID AND Type!='E_T' AND Type!='E_TP' AND Type!='E_P';
+END//
+DELIMITER ;
+            
+CALL get_attendanceby_StudentId('TG_2022_1400');
+
+
+get_attendanceby_StudentId_Course_code...
+DELIMITER //
+CREATE PROCEDURE get_attendanceby_StudentId_Course_code(IN Student_ID CHAR(12),IN Course CHAR(7))
+BEGIN
+	SELECT Stu_id,Course_code,Attendance_Percentage,Eligibility
+	FROM attendance_eligibility
+	WHERE stu_id=Student_ID AND Course_code=Course AND Type!='E_T' AND Type!='E_TP' AND Type!='E_P';
+END//
+DELIMITER ;
+
+CALL get_attendanceby_StudentId_Course_code('TG_2022_1400','ICT1212');
