@@ -37,10 +37,21 @@ FLUSH PRIVILEGES;
 
 --Create Technical officer with password
 
-CREATE USER 'Technical_officer'@'localhost' IDENTIFIED BY 'techpwd';
 
-GRANT SELECT,INSERT,UPDATE ON tecmis_fot.Attendance, attendance_count_view ,attendance_eligibility_view 
-TO 'Technical_officer'@'localhost';
+CREATE USER 'Technicalofficer'@'localhost' IDENTIFIED BY 'techpwd';
+
+GRANT SELECT, INSERT, UPDATE ON tecmis_fot.attendance TO 'Technicalofficer'@'localhost';
+
+
+GRANT EXECUTE ON PROCEDURE tecmis_fot. get_attendanceby_StudentId_Course_code TO 'Technicalofficer'@'localhost';
+GRANT EXECUTE ON PROCEDURE tecmis_fot. get_attendance_by_course_code  'Technicalofficer'@'localhost';
+
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.attendance_count_view TO 'Technicalofficer'@'localhost';
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.attendance_eligibility_view TO 'Technicalofficer'@'localhost';
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.combined_attendance_view TO 'Technicalofficer'@'localhost';
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.practical_attendance_view TO 'Technicalofficer'@'localhost';
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.theory_attendance_view  TO 'Technicalofficer'@'localhost';
+GRANT SELECT,SHOW VIEW,INSERT,UPDATE ON tecmis_fot.medical_duration_view  TO 'Technicalofficer'@'localhost';
 
 FLUSH PRIVILEGES;
 
@@ -49,7 +60,22 @@ FLUSH PRIVILEGES;
 
 CREATE USER 'Student'@'localhost' IDENTIFIED BY 'studentpwd';
 
-GRANT SELECT ON tecmis_fot.marks,ca_marks_eligible, final_mark_view ,  grade 
-TO 'student'@'localhost';
+
+
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.ca_marks_eligible  TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.cgpa_view  TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.end_mark TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.final_mark_view TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.grade TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.grade_point_view  TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.quiz_mark TO 'Student'@'localhost';
+GRANT SELECT,SHOW VIEW ON  tecmis_fot.sgpa_view TO 'Student'@'localhost';
+
+
+GRANT EXECUTE ON PROCEDURE tecmis_fot. TO 'Student'@'localhost';
+GRANT EXECUTE ON PROCEDURE tecmis_fot.GetAttendance_ TO 'Student'@'localhost';
+GRANT EXECUTE ON PROCEDURE tecmis_fot.combined_attendance_eligibility TO 'Student'@'localhost';
+GRANT EXECUTE ON PROCEDURE tecmis_fot.GetAtt_StuId_Ccode TO 'Student'@'localhost';
+
 
 FLUSH PRIVILEGES;
