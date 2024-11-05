@@ -44,10 +44,19 @@ ORDER BY
 
 
 
-CREATE OR REPLACE VIEW attendance_eligibility AS
-  SELECT stu_id,course_code, Type,
-  (COUNT(status) / 14.0) * 100 AS Attendance_Percentage,
-    IF((COUNT(status) / 14.0) * 100 >= 80, "Eligible", "Not Eligible") AS Eligibility
-   FROM attendance
-    WHERE status = "Present"
- GROUP BY  stu_id, course_code, Type;
+CREATE VIEW attendance_eligibility_view AS
+SELECT 
+    student.stu_id, 
+    attendance.course_code,
+    attendance.Type, 
+    COUNT(attendance.status) / 14 * 100 AS "Percentage", 
+    IF((COUNT(attendance.status) / 14 * 100) >= 80, "Eligible", "Not Eligible") AS "Eligibility"
+FROM 
+    attendance, student
+WHERE 
+    attendance.stu_id = student.stu_id 
+    AND attendance.status = "Present" 
+    AND student.student_state = 'Proper'
+    AND attendance.Type NOT IN ('E_P', 'E_T', 'E_TP')
+GROUP BY 
+    student.stu_id, attendance.course_code, attendance.Type;
