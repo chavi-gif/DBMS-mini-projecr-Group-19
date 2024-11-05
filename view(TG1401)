@@ -14,28 +14,15 @@ WHERE attendance_eligibility.stu_id = CA_marks_eligible.stu_id AND attendance_el
 
 ///getting final results(ca+end)
 
-
- CREATE VIEW combined_results AS
- SELECT
-     e.Student,
-     e.Course,
-
-     CASE
-		WHEN e.Course = 'ENG1222' THEN fr.English_Final_Mark
-		WHEN e.Course = 'ICT1212' THEN fr.DBMS_theory_Final_Mark
-		WHEN e.Course = 'ICT1222' THEN fr.DBMS_practical_Final_Mark
-		WHEN e.Course = 'ICT1233' THEN fr.Server_side_Final_Mark
-		WHEN e.Course = 'ICT1242' THEN fr.Computer_architecture_Final_Mark
-		WHEN e.Course = 'ICT1253' THEN fr.Computer_Network_Final_Mark
-		WHEN e.Course = 'TCS1212' THEN fr.Management_Final_Mark
-		WHEN e.Course = 'TCS1233' THEN fr.D_maths_Final_Mark
-     ELSE 0
-		END AS Final_Mark
-    FROM
-		Eligible e
-    JOIN
-      final_results fr ON  e.Course = fr.Course_code;
-
+CREATE VIEW Final_mark_view AS 
+SELECT DISTINCT
+	stu_id,
+	Course_code,
+	(end_mark+ca_marks) AS final_mark
+FROM 
+	end_mark,ca_marks_view
+WHERE 
+	end_mark.student=ca_marks_view.stu_id AND end_mark.course=ca_marks_view.course_code;
 
 
 
