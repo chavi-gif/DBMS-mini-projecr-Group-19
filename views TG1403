@@ -1,4 +1,55 @@
 
+--To obtain the eligibility CA part must have more than or equal 50% marks from the CA marks
+
+
+CREATE VIEW QUIZ_mark AS
+SELECT 
+    stu_id,
+    course_code,
+    (((quiz_1 + quiz_2 + quiz_3) - LEAST(quiz_1, quiz_2, quiz_3)) / 200) * 10 AS final_quiz_mark
+FROM 
+    mark;
+	
+CREATE VIEW CA_marks_view AS
+SELECT	
+    m.stu_id,
+    m.course_code,
+    CASE
+        WHEN m.course_code IN ('ICT1212', 'ENG1222', 'TCS1212') THEN 
+            (q.final_quiz_mark) + (m.Mid_Theory * 0.20)
+        WHEN m.course_code IN ('ICT1222', 'ICT1233', 'ICT1242', 'ICT1253', 'TCS1233') THEN 
+            (q.final_quiz_mark) + ((m.assesment / 100) * 10) + ((m.Mid_Theory + m.Mid_Practical) / 200) * 20
+        ELSE 
+            0
+    END AS CA_marks
+FROM 
+    mark m
+JOIN 
+    QUIZ_mark q ON m.stu_id = q.stu_id AND m.course_code = q.course_code
+GROUP BY 
+    m.stu_id, m.course_code, q.final_quiz_mark, m.Mid_Theory, m.assesment, m.Mid_Practical;
+
+
+CREATE VIEW CA_marks_eligible AS
+SELECT	
+    cm.stu_id,
+    cm.course_code,
+    cm.CA_marks,
+    CASE 
+        WHEN cm.course_code IN ('ICT1212', 'ENG1222', 'TCS1212') AND cm.CA_marks > 15 THEN
+            'eligible'  
+        WHEN cm.course_code IN ('ICT1222', 'ICT1233', 'ICT1242', 'ICT1253', 'TCS1233') AND cm.CA_marks > 20 THEN 
+            'eligible' 
+        ELSE 
+            'not_eligible' 
+    END AS CA_eligibility
+FROM 
+    CA_marks_view cm
+JOIN 
+    MARK m ON cm.stu_id = m.stu_id;  
+	
+
+
 ----	Check attendance only for theory
   
 CREATE VIEW theory_attendance_view AS
